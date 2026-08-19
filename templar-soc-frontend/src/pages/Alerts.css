@@ -1,0 +1,64 @@
+.alerts { display: flex; flex-direction: column; height: 100%; padding: 20px 24px; gap: 16px; overflow: hidden; }
+
+.alerts-stats { display: flex; gap: 20px; }
+.alerts-stat { text-align: right; }
+.alerts-stat-n { font-family: var(--font-display); font-size: 26px; line-height: 1; }
+.alerts-stat .meta-label { margin-top: 4px; font-size: 8.5px; }
+
+/* emergency banner */
+.emergency {
+  position: relative; overflow: hidden; flex-shrink: 0;
+  border: 1px solid var(--crimson); border-radius: var(--radius);
+  background: linear-gradient(to right, rgba(255,30,60,0.14), rgba(255,30,60,0.04));
+  padding: 14px 18px; display: flex; align-items: center; gap: 20px;
+  box-shadow: 0 0 26px rgba(255,30,60,0.14), inset 0 0 0 1px var(--crimson-line);
+}
+.emergency-strobe { position: absolute; inset: 0; background: linear-gradient(to right, transparent, rgba(255,30,60,0.12), transparent); animation: strobe 3.2s ease-in-out infinite; pointer-events: none; }
+@keyframes strobe { 0%,100% { transform: translateX(-100%); } 50% { transform: translateX(100%); } }
+.emergency-badge { display: flex; align-items: center; gap: 8px; font-size: 10px; letter-spacing: 0.18em; color: var(--crimson); font-weight: 700; white-space: nowrap; }
+.emergency-body { flex: 1; }
+.emergency-title { color: var(--white); font-size: 13px; letter-spacing: 0.06em; font-weight: 600; }
+.emergency-text { color: var(--steel); font-size: 11px; margin-top: 4px; line-height: 1.6; }
+.emergency-meta { font-size: 9.5px; color: var(--muted); white-space: nowrap; }
+
+/* filters */
+.alerts-filters { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.filter-chip {
+  background: transparent; border: 1px solid var(--border); color: var(--muted);
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em;
+  padding: 6px 13px; border-radius: var(--radius); cursor: pointer;
+  transition: all var(--t-fast);
+}
+.filter-chip:hover { color: var(--steel); border-color: var(--border-lit); }
+.filter-chip.is-active { color: var(--crimson); border-color: var(--crimson); background: var(--crimson-wash); }
+.alerts-count { margin-left: auto; font-size: 10px; letter-spacing: 0.12em; }
+
+/* body */
+.alerts-body { display: grid; grid-template-columns: 340px 1fr; gap: 16px; flex: 1; min-height: 0; }
+.alerts-list { display: flex; flex-direction: column; gap: 8px; overflow-y: auto; padding-right: 4px; }
+
+.alert-card {
+  position: relative; text-align: left; cursor: pointer;
+  background: var(--charcoal); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 12px 14px 12px 18px; transition: border-color var(--t-fast), background var(--t-fast);
+  overflow: hidden;
+}
+.alert-card:hover { border-color: var(--border-lit); background: var(--charcoal-raised); }
+.alert-card.is-active { border-color: var(--crimson-line); background: linear-gradient(to right, var(--crimson-wash), transparent); }
+.alert-card-rail { position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: currentColor; opacity: 0.9; }
+.alert-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.alert-card-time { font-size: 9.5px; }
+.alert-card-title { color: var(--white); font-size: 12.5px; letter-spacing: 0.02em; line-height: 1.4; }
+.alert-card-src { margin-top: 8px; font-size: 8.5px; }
+
+/* detail */
+.alert-detail { padding: 22px 24px; overflow-y: auto; }
+.alert-detail-head { display: flex; align-items: center; gap: 12px; }
+.alert-detail-status { font-size: 9.5px; letter-spacing: 0.16em; color: var(--muted); border: 1px solid var(--border); padding: 2px 8px; border-radius: var(--radius); }
+.alert-detail-title { font-family: var(--font-display); font-weight: 600; font-size: 20px; letter-spacing: 0.03em; color: var(--white); margin: 16px 0; line-height: 1.2; }
+.alert-detail-meta { display: flex; flex-direction: column; gap: 2px; }
+.alert-detail-cap { font-size: 9px; margin-bottom: 10px; }
+.alert-detail-body { font-size: 12.5px; line-height: 1.75; color: var(--steel); letter-spacing: 0.01em; }
+.alert-detail-actions { display: flex; gap: 10px; margin-top: 22px; }
+
+@media (max-width: 1200px) { .alerts-body { grid-template-columns: 300px 1fr; } }

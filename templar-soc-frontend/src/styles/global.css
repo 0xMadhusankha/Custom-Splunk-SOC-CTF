@@ -1,0 +1,284 @@
+/* ============================================================
+   ANIMUS 1.0 — TEMPLAR SOC — global base + shared primitives
+   ============================================================ */
+
+@import './tokens.css';
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background-color: var(--void);
+  color: var(--steel);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow: hidden; /* app owns its own scroll regions */
+}
+
+::selection { background: var(--crimson-dim); color: var(--white); }
+
+/* ---- Scrollbars : thin, classified ---- */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--void); }
+::-webkit-scrollbar-thumb {
+  background: var(--faint);
+  border: 2px solid var(--void);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--dim); }
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
+
+/* ============================================================
+   Shared typographic primitives
+   ============================================================ */
+
+.meta-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.display-heading {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin: 0;
+  line-height: 1.05;
+}
+
+.mono { font-family: var(--font-mono); }
+.crimson { color: var(--crimson); }
+.gold { color: var(--gold); }
+.muted { color: var(--muted); }
+.steel { color: var(--steel); }
+
+.text-glow { text-shadow: 0 0 12px var(--crimson-glow); }
+.gold-glow { text-shadow: 0 0 12px var(--gold-glow); }
+
+/* ============================================================
+   Panel — the universal surface unit. Sharp corners, 1px edge.
+   ============================================================ */
+
+/* Command-center glass: ~15% translucent over a backdrop blur so the
+   living atmosphere is faintly visible behind the chrome, with a
+   restrained crimson inner edge. Content sits on opaque inputs/rows,
+   so readability is untouched. This reads as military glass, not
+   consumer glassmorphism. Falls back to a near-solid panel where
+   backdrop-filter is unsupported. */
+.panel {
+  background: rgba(11, 14, 20, 0.82);
+  -webkit-backdrop-filter: blur(10px) saturate(1.05);
+  backdrop-filter: blur(10px) saturate(1.05);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  position: relative;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.02),
+    inset 0 0 30px rgba(255, 30, 60, 0.022),
+    0 2px 12px rgba(0, 0, 0, 0.35);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .panel { background: rgba(11, 14, 20, 0.94); }
+}
+
+/* Player bundle only (has the animated Atmosphere background behind it;
+   admin/Mission Control does not, and stays at the base opacity above,
+   untouched, per its frozen-UI status): a touch more translucent so the
+   living background reads through panels during investigation. Content
+   still sits on opaque inputs/rows, so readability is unaffected. */
+body.player-app .panel { background: rgba(11, 14, 20, 0.62); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  body.player-app .panel { background: rgba(11, 14, 20, 0.88); }
+}
+
+.panel--raised { background: rgba(18, 21, 29, 0.84); }
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  min-height: 40px;
+}
+
+.panel-head .title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--border-lit);
+  border-radius: var(--radius);
+  color: var(--steel);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast), box-shadow var(--t-fast), transform var(--t-fast);
+  user-select: none;
+  white-space: nowrap;
+}
+.btn:hover { color: var(--white); border-color: var(--dim); background: var(--charcoal-hi); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.4); }
+.btn:active { transform: translateY(0); box-shadow: none; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.btn--primary {
+  background: var(--crimson);
+  border-color: var(--crimson);
+  color: #0a0004;
+  font-weight: 700;
+}
+.btn--primary:hover {
+  background: var(--crimson-bright);
+  border-color: var(--crimson-bright);
+  color: #0a0004;
+  box-shadow: 0 0 18px var(--crimson-glow);
+}
+
+.btn--ghost { border-color: var(--border); color: var(--muted); }
+.btn--ghost:hover { color: var(--steel); border-color: var(--border-lit); }
+
+.btn--sm { padding: 5px 10px; font-size: 10px; letter-spacing: 0.1em; }
+
+/* ============================================================
+   Severity tags
+   ============================================================ */
+
+.sev {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: var(--radius);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+  line-height: 1.4;
+}
+.sev::before {
+  content: '';
+  width: 5px; height: 5px;
+  background: currentColor;
+  border-radius: 50%;
+  box-shadow: 0 0 6px currentColor;
+}
+.sev--critical, .sev--emergency { color: var(--sev-critical); }
+.sev--high     { color: var(--sev-high); }
+.sev--medium   { color: var(--sev-medium); }
+.sev--low      { color: var(--sev-low); }
+.sev--info     { color: var(--sev-info); }
+
+/* ============================================================
+   Inputs
+   ============================================================ */
+
+.input, .textarea, .select {
+  width: 100%;
+  background: var(--void);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--white);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 9px 12px;
+  outline: none;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+.input:focus, .textarea:focus, .select:focus {
+  border-color: var(--crimson-dim);
+  box-shadow: 0 0 0 1px var(--crimson-dim), 0 0 16px var(--crimson-wash);
+}
+.input::placeholder, .textarea::placeholder { color: var(--dim); }
+.textarea { resize: vertical; line-height: 1.6; }
+.select { appearance: none; cursor: pointer; }
+
+.field-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 7px;
+}
+
+/* ============================================================
+   Utility
+   ============================================================ */
+
+.divider { height: 1px; background: var(--border); border: 0; margin: 0; }
+.blink { animation: animus-blink 1.6s steps(1) infinite; }
+@keyframes animus-blink { 0%,60% { opacity: 1; } 61%,100% { opacity: 0.15; } }
+
+/* Breathing edge — for important, "live" surfaces. Restrained: a soft
+   crimson halo that inhales and exhales. Gold variant for the Order. */
+.breathe-edge { animation: breathe-edge 5.5s ease-in-out infinite; }
+@keyframes breathe-edge {
+  0%, 100% { box-shadow: 0 0 0 1px var(--border), 0 0 0px rgba(255,30,60,0); }
+  50%      { box-shadow: 0 0 0 1px var(--crimson-line), 0 0 22px rgba(255,30,60,0.14); }
+}
+.breathe-edge--gold { animation: breathe-edge-gold 6.5s ease-in-out infinite; }
+@keyframes breathe-edge-gold {
+  0%, 100% { box-shadow: 0 0 0 1px var(--border), 0 0 0px rgba(201,162,75,0); }
+  50%      { box-shadow: 0 0 0 1px var(--gold-dim), 0 0 22px rgba(201,162,75,0.12); }
+}
+@media (prefers-reduced-motion: reduce) { .breathe-edge, .breathe-edge--gold { animation: none; } }
+
+.scroll-y { overflow-y: auto; }
+
+/* ============================================================
+   Shared surface header (Alerts / Intel / Mission Control)
+   ============================================================ */
+.surface-head {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 24px; flex-shrink: 0;
+}
+.surface-title { font-size: 22px; letter-spacing: 0.08em; margin-top: 6px; color: var(--crimson); text-shadow: 0 0 14px var(--crimson-wash); }
+.surface-sub { margin-top: 8px; font-size: 11px; color: var(--muted); max-width: 640px; line-height: 1.6; letter-spacing: 0.02em; }
+
+.metaline { display: flex; align-items: baseline; gap: 12px; padding: 4px 0; }
+.metaline .meta-label { min-width: 92px; }
+.metaline-v { font-size: 11px; color: var(--steel); letter-spacing: 0.04em; }
+
+/* Respect reduced-motion for the whole app */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

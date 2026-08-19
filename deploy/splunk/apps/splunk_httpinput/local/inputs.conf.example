@@ -1,0 +1,22 @@
+# HTTP Event Collector — the ingest path for the generated dataset.
+# Deploy to: /opt/splunk/etc/apps/splunk_httpinput/local/inputs.conf
+#
+# Generate a fresh token per deployment — never reuse the one from a previous
+# event. Either create it in the UI (Settings > Data inputs > HTTP Event
+# Collector > New Token) or from the CLI:
+#
+#   sudo /opt/splunk/bin/splunk http-event-collector create templar_hec \
+#        -index templar_investigation -uri https://127.0.0.1:8089
+#
+# Then export it for the generator:  export HEC_TOKEN=<token>
+
+[http]
+disabled = 0
+port = 8088
+enableSSL = 1
+
+[http://templar_hec]
+disabled = 0
+token = REPLACE-WITH-A-FRESHLY-GENERATED-HEC-TOKEN
+indexes = templar_investigation
+index = templar_investigation

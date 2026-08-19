@@ -1,0 +1,38 @@
+/* ============================================================
+   ADMIN (Mission Control) shell — deliberately static and clear.
+   No cinematic atmosphere: organizers need legibility, not
+   immersion. A single quiet grid, nothing that moves fast.
+   ============================================================ */
+
+.admin-root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--void);
+  background-image:
+    linear-gradient(to right, rgba(120,130,150,0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(120,130,150,0.03) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+/* topbar content wrapper (the shell topbar itself is .topbar/.admin-topbar
+   from shell.css / admin-shell.css) */
+.admin-bar-left { display: flex; align-items: center; gap: 12px; }
+.admin-restricted { font-size: 10px; letter-spacing: 0.16em; color: var(--crimson); }
+.admin-clock { font-size: 10.5px; letter-spacing: 0.08em; color: var(--muted); }
+
+.admin-logout-btn {
+  background: transparent; border: 1px solid var(--border-lit); color: var(--muted);
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.14em; font-weight: 600;
+  padding: 5px 11px; border-radius: var(--radius); cursor: pointer; transition: all 120ms;
+}
+.admin-logout-btn:hover { color: var(--crimson-bright); border-color: var(--crimson-dim); background: var(--crimson-wash); }
+
+.admin-root--checking { align-items: center; justify-content: center; }
+.admin-checking-label { font-size: 11px; letter-spacing: 0.2em; color: var(--muted); }
+
+/* In the admin build the breathing gold edge is a static edge —
+   clarity over spectacle. */
+.admin-root .breathe-edge, .admin-root .breathe-edge--gold { animation: none; }
+
+@media (max-width: 640px) { .admin-restricted { display: none; } }

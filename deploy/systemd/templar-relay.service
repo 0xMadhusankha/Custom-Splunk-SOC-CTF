@@ -1,0 +1,15 @@
+[Unit]
+Description=TEMPLAR SOC realtime relay
+After=network.target
+
+[Service]
+Type=simple
+User=soc-analyst
+WorkingDirectory=/opt/realtime-server
+ExecStart=/usr/bin/node server.js
+Restart=always
+RestartSec=3
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,67 @@
+/* ============================================================
+   ADMIN SHELL — gold-toned overrides on the shared player shell
+   (.app-shell / .sidebar / .topbar / .nav-item from shell.css).
+   Additive only: reuses the existing grid + nav-item--admin gold
+   styling, and adds the small helpers the Dashboard / System Status /
+   Settings views need. No new visual language.
+   ============================================================ */
+
+/* the admin bridge is quiet and legible — no cinematic atmosphere */
+.admin-shell {
+  background-color: var(--void);
+  background-image:
+    linear-gradient(to right, rgba(120,130,150,0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(120,130,150,0.03) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+/* gold accents in place of the player's crimson */
+.admin-shell .sidebar::after { background: linear-gradient(to bottom, transparent, var(--gold-glow), transparent); }
+.admin-shell .sidebar-brand-sub { color: var(--gold); text-shadow: 0 0 10px var(--gold-glow); }
+.admin-shell .sidebar-eq span { background: var(--gold-dim); }
+.admin-shell .topbar::after { background: linear-gradient(to right, transparent, var(--gold-glow) 40%, var(--gold-glow) 60%, transparent); }
+
+/* topbar content (RESTRICTED / clock / logout reuse admin.css classes) */
+.admin-topbar { justify-content: flex-end; gap: 18px; }
+.admin-topbar .admin-bar-left { margin-right: auto; }
+
+/* global publish/edit toast — context-owned, shown regardless of view */
+.admin-toast { position: fixed; top: 70px; right: 26px; z-index: 60; }
+.admin-toast .mc-flash { position: static; animation: brdcst-in 260ms ease; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+
+/* ---- minimal view helpers (Dashboard / System Status / Settings) ---- */
+.admin-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+.admin-two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+@media (max-width: 900px) { .admin-two { grid-template-columns: 1fr; } }
+
+.admin-stat { padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; }
+.admin-stat-n { font-family: var(--font-display); font-size: 30px; color: var(--gold); line-height: 1; }
+.admin-stat-n span { font-size: 15px; color: var(--muted); }
+.admin-stat-l { font-size: 9px; letter-spacing: 0.2em; color: var(--muted); }
+
+.admin-rows { display: flex; flex-direction: column; }
+.admin-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 11px 16px; border-bottom: 1px solid var(--border-faint); font-size: 11px;
+}
+.admin-row:last-child { border-bottom: 0; }
+.admin-row-k { color: var(--muted); letter-spacing: 0.1em; }
+.admin-row-v { color: var(--steel); letter-spacing: 0.06em; text-align: right; }
+
+.admin-dot { display: inline-flex; align-items: center; gap: 8px; }
+.admin-led { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.admin-led--on { background: #38d16a; box-shadow: 0 0 8px #38d16a99; }
+.admin-led--off { background: var(--dim); }
+.admin-led--gold { background: var(--gold); box-shadow: 0 0 8px var(--gold-glow); }
+
+.admin-emerg {
+  display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+  background: linear-gradient(180deg, rgba(92,10,21,0.85), rgba(60,6,14,0.85));
+  border: 1px solid var(--crimson-dim); border-radius: var(--radius);
+}
+.admin-emerg > span:first-child { color: var(--crimson-bright); font-size: 16px; }
+.admin-emerg-k { font-size: 8.5px; letter-spacing: 0.22em; color: var(--crimson-bright); font-weight: 700; }
+.admin-emerg-t { font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--white); text-transform: uppercase; margin-top: 2px; }
+.admin-quiet { padding: 12px 16px; font-size: 10px; letter-spacing: 0.12em; color: var(--dim); }
+
+.admin-settings-actions { padding: 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }

@@ -1,0 +1,48 @@
+# ─── SECRETS — never commit ────────────────────────────────────────────────
+# SSH private key for the SOC VM.
+SOC-VM-keys/
+*.pem
+*.key
+
+# Live environment files. Templates (.env.example, deploy/env-templates/*)
+# are committed; the real ones are not.
+.env
+.env.local
+.env.*.local
+env.local.test
+
+# Splunk secrets: passwords.conf, server.conf (pass4SymmKey / sslPassword),
+# and the real HEC token live only on the box.
+deploy/splunk/**/passwords.conf
+deploy/splunk/**/server.conf
+deploy/splunk/**/inputs.conf.real
+
+# ─── RUNTIME STATE ─────────────────────────────────────────────────────────
+# SQLite DB holds bcrypt organizer/player credential hashes + uploaded sounds.
+realtime-server/data/
+*.db
+*.db-shm
+*.db-wal
+*.log
+!CTF-logs/*.log
+
+# ─── BUILD OUTPUT & DEPENDENCIES ───────────────────────────────────────────
+node_modules/
+templar-soc-frontend/dist/
+templar-soc-frontend/admin-dist/
+templar-soc-frontend/player-dist/
+dist-ssr/
+.vite/
+*.local
+
+# Zip snapshots — redundant with the checked-in source trees.
+*.zip
+*.tar.gz
+
+# ─── EDITOR / OS ───────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+**/.claude/scheduled_tasks.lock
+**/.claude/settings.local.json
+__pycache__/
+*.pyc

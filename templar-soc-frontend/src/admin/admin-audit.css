@@ -1,0 +1,16 @@
+.admin-audit { margin-top: 16px; }
+.admin-audit-list { max-height: 220px; overflow-y: auto; }
+.admin-audit-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px; border-bottom: 1px solid var(--border-faint);
+  font-size: 10.5px;
+}
+.admin-audit-action {
+  flex-shrink: 0; font-size: 8.5px; letter-spacing: 0.1em; font-weight: 700;
+  padding: 2px 6px; border-radius: var(--radius); border: 1px solid currentColor;
+}
+.admin-audit-action--session { color: var(--gold); }
+.admin-audit-action--warn { color: var(--crimson); }
+.admin-audit-action--action { color: var(--steel); }
+.admin-audit-detail { flex: 1; min-width: 0; color: var(--steel); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.admin-audit-time { flex-shrink: 0; font-size: 8px; }

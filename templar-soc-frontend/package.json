@@ -1,0 +1,23 @@
+{
+  "name": "templar-soc-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "TEMPLAR SOC — ANIMUS 1.0 — immersive front-end for the captured Templar Security Operations Center. Presentation layer designed to plug into Splunk Enterprise.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --mode player && vite build --mode admin",
+    "build:player": "vite build --mode player",
+    "build:admin": "vite build --mode admin",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.8"
+  }
+}

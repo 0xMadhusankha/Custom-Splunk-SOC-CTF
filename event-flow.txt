@@ -1,0 +1,84 @@
+The Three Factions
+1. The Templar Order (Defenders)
+
+The Templar Order owns the entire enterprise infrastructure. They operate one of the world's most advanced Security Operations Centers, continuously monitoring their environment and successfully defending against attacks from the Assassin Brotherhood.
+
+The organizers of the event act as the Templars. During the competition they also operate the SOC, publish threat intelligence, send operational alerts, and keep the environment running.
+
+2. The Rogue Assassins (Hidden Attackers)
+
+The Rogue Assassins are not the finalist teams.
+
+Long before the competition begins, this faction secretly infiltrated the Templar environment. Unlike previous attacks, they successfully compromised the Templar SOC itself, stole intelligence, moved laterally through the network, established persistence, and covered their tracks.
+
+The Templars never discovered this compromise.
+
+Everything the Rogue Assassins did generated logs, alerts, authentication records, PowerShell activity, process creation events, DNS requests, and network telemetry. Those artifacts form the investigation dataset used during the competition.
+
+The organizers also control this faction because they created the attack scenario before the event.
+
+3. The Assassin Brotherhood (Finalist Teams)
+
+The fifteen finalist teams represent the Assassin Brotherhood.
+
+Their mission is completely different from the Rogue Assassins.
+
+On event day they launch a new attack against the Templar Active Directory environment. During that challenge they successfully compromise the Domain Controller and discover valid credentials for the Templar Security Operations Center.
+
+Using those stolen credentials, they access the captured SOC.
+
+From this point onward, they are investigators inside the enemy's command center.
+
+Event Flow
+
+The competition has two phases.
+
+Phase 1 – Active Directory Attack
+
+The fifteen teams attack the live Templar Active Directory environment.
+
+Their objective is to compromise the infrastructure and recover the stolen SOC credentials.
+
+Once they complete this challenge, the CTF portal unlocks Phase 2.
+
+Phase 2 – Templar SOC Investigation
+
+Players log into the captured Templar Security Operations Center using the credentials they recovered.
+
+Inside the SOC they are not hacking anymore.
+
+Instead, they investigate the historical telemetry left behind by the Rogue Assassins.
+
+The SOC provides access to enterprise logs, alerts, and threat intelligence.
+
+Players execute searches, analyze evidence, follow attack traces, identify attacker actions, and answer investigation questions.
+
+The answers are never submitted inside the SOC.
+
+Instead, players return to the CTF portal and submit their answers there.
+
+The portal validates the answers, awards points, and unlocks the next investigation.
+
+The SOC is simply the investigation workstation.
+
+Organizer Responsibilities
+
+The organizers play two roles simultaneously.
+
+As Templars, they operate the SOC, monitor the infrastructure, and publish operational alerts and threat intelligence throughout the event.
+
+As Rogue Assassins, they created the original attack scenario and the evidence that players investigate.
+
+The organizers know the complete story, while the players only discover it through investigation.
+
+The Player Experience
+
+From the player's perspective, the story should feel natural.
+
+They first defeat the Templar defenses and steal SOC credentials.
+
+Then they enter what appears to be a real classified Templar Security Operations Center.
+
+Using the enemy's own investigation platform, they reconstruct the previously unknown Rogue Assassin intrusion, uncover what really happened, and solve each incident by analyzing enterprise telemetry.
+
+The SOC is not the game itself—it is the tool that the Assassins have captured from the Templars to uncover the truth.

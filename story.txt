@@ -1,0 +1,15 @@
+The story is simple.
+
+For months, the Templar Order successfully defended its global infrastructure against countless attacks from the Assassin Brotherhood. Every intrusion was detected, every attack was contained, and the Security Operations Center remained operational.
+
+Unknown to both sides, a Rogue Assassin faction secretly infiltrated the Templar SOC itself. They stole intelligence, moved through the environment, and disappeared without revealing their presence. The Templars never realized their own SOC had been compromised.
+
+On the day of the competition, a new Assassin strike force is assembled. These are the finalist teams. Their first mission is to attack and capture the Templar Active Directory environment. During that operation, they discover valid credentials belonging to the Templar Security Operations Center.
+
+Using those stolen credentials, they enter the captured SOC.
+
+They are not building a new system. They are standing inside the enemy's operational headquarters, using the tools that the Templars themselves use every day.
+
+The interface should make players feel like they have entered a real classified military cyber command center. It should feel authentic, disciplined, and under constant operation. Every screen should reinforce the idea that this is a living Security Operations Center belonging to the Templar Order—not a generic dashboard or a fictional hacker UI.
+
+The players are intruders inside the enemy's command center, using it to investigate what happened before they arrived. That feeling is more important than any individual UI element.

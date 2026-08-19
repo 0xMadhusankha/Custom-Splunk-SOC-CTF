@@ -1,0 +1,210 @@
+/* ============================================================
+   APP SHELL — sidebar + topbar + notification chrome
+   ============================================================ */
+
+.app-shell {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  grid-template-rows: var(--topbar-h) 1fr;
+  grid-template-areas:
+    'brand topbar'
+    'sidebar main';
+}
+
+/* ---------------- TOP BAR ---------------- */
+.topbar {
+  grid-area: topbar;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 0 22px 0 26px;
+  background: linear-gradient(to bottom, rgba(11,14,20,0.96), rgba(8,10,15,0.9));
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(4px);
+  position: relative;
+}
+.topbar::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: -1px; height: 1px;
+  background: linear-gradient(to right, transparent, var(--crimson-line) 30%, var(--crimson-line) 70%, transparent);
+}
+.topbar-left { display: flex; align-items: center; }
+
+/* live subsystem LED cluster — the SOC is always operating */
+.sys-leds { display: flex; align-items: center; gap: 14px; }
+.sys-led { display: inline-flex; align-items: center; gap: 6px; }
+.sys-led-code { font-size: 8.5px; letter-spacing: 0.16em; color: var(--dim); font-weight: 600; }
+.led {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--dim); flex-shrink: 0;
+  animation: led-blink 2.4s ease-in-out infinite;
+}
+.led--green   { background: #38d16a; box-shadow: 0 0 7px #38d16a; }
+.led--amber   { background: var(--sev-medium); box-shadow: 0 0 7px var(--sev-medium); }
+.led--crimson { background: var(--crimson); box-shadow: 0 0 7px var(--crimson); }
+@keyframes led-blink {
+  0%, 100% { opacity: 1; }
+  46%      { opacity: 0.85; }
+  50%      { opacity: 0.2; }
+  54%      { opacity: 0.85; }
+}
+@media (prefers-reduced-motion: reduce) { .led { animation: none; } }
+.topbar-center {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 11px; letter-spacing: 0.24em; color: var(--crimson);
+}
+.topbar-org { text-shadow: 0 0 10px var(--crimson-wash); }
+.topbar-sep { color: var(--dim); }
+.topbar-right { margin-left: auto; display: flex; align-items: center; gap: 18px; }
+.topbar-meta { display: flex; flex-direction: column; gap: 3px; text-align: right; }
+.topbar-meta-row { display: flex; gap: 10px; align-items: baseline; justify-content: flex-end; }
+.topbar-meta-val { font-size: 11px; letter-spacing: 0.1em; color: var(--steel); }
+.topbar-mark { display: flex; align-items: center; }
+.topbar-clock {
+  font-size: 10.5px; letter-spacing: 0.08em; color: var(--muted);
+  padding-left: 18px; border-left: 1px solid var(--border);
+}
+
+/* ---------------- SIDEBAR ---------------- */
+.sidebar {
+  grid-area: brand / brand / sidebar / sidebar;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom, rgba(11,14,20,0.97), rgba(6,8,12,0.97));
+  border-right: 1px solid var(--border);
+  padding: 0;
+  position: relative;
+}
+.sidebar::after {
+  content: '';
+  position: absolute; top: 0; bottom: 0; right: -1px; width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--crimson-line), transparent);
+}
+.sidebar-brand {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 6px; padding: 20px 16px 18px;
+}
+.sidebar-brand-text {
+  font-family: var(--font-display); font-weight: 600;
+  letter-spacing: 0.3em; font-size: 15px; color: var(--white);
+  margin-top: 8px;
+}
+.sidebar-brand-sub {
+  font-size: 10px; letter-spacing: 0.34em; color: var(--crimson);
+  text-shadow: 0 0 10px var(--crimson-wash);
+}
+.sidebar-nav { padding: 16px 12px 8px; display: flex; flex-direction: column; gap: 3px; }
+.sidebar-nav-heading { padding: 0 8px 10px; font-size: 9px; letter-spacing: 0.28em; }
+
+.nav-item {
+  position: relative;
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px;
+  color: var(--muted);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  transition: color var(--t-base), background var(--t-base), border-color var(--t-base);
+  cursor: pointer;
+}
+.nav-item-code { font-size: 11px; letter-spacing: 0.14em; font-weight: 500; }
+.nav-item-rail {
+  position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px;
+  background: var(--crimson); opacity: 0; transform: scaleY(0.3);
+  transition: opacity var(--t-base), transform var(--t-base);
+  box-shadow: 0 0 10px var(--crimson-glow);
+}
+.nav-item:hover { color: var(--steel); background: var(--charcoal-raised); border-color: var(--border-faint); }
+.nav-item.is-active {
+  color: var(--white);
+  background: linear-gradient(to right, var(--crimson-wash), transparent);
+  border-color: var(--crimson-line);
+}
+.nav-item.is-active .nav-item-rail { opacity: 1; transform: scaleY(1); }
+.nav-item.is-active svg { color: var(--crimson); }
+.nav-item--admin { color: var(--gold-dim); margin: 4px 12px 0; }
+.nav-item--admin:hover { color: var(--gold); }
+.nav-item--admin .nav-item-rail { background: var(--gold); box-shadow: 0 0 10px var(--gold-glow); }
+.nav-item--admin.is-active { color: var(--gold-bright); background: linear-gradient(to right, var(--gold-glow), transparent); border-color: var(--gold-dim); }
+.nav-item--admin.is-active svg { color: var(--gold); }
+
+.sidebar-spacer { flex: 1; }
+
+.sidebar-monitor { padding: 14px 18px 16px; display: flex; flex-direction: column; gap: 12px; }
+.sidebar-eq {
+  display: flex; align-items: flex-end; gap: 2px; height: 30px;
+  opacity: 0.5;
+}
+.sidebar-eq span {
+  flex: 1; background: var(--crimson-dim); height: 20%;
+  animation: eq 1.4s ease-in-out infinite;
+}
+@keyframes eq {
+  0%, 100% { height: 15%; opacity: 0.4; }
+  50% { height: 90%; opacity: 0.8; }
+}
+.sidebar-warning { font-size: 9px; letter-spacing: 0.14em; line-height: 1.7; color: var(--muted); }
+.role-toggle {
+  background: transparent; border: 1px solid var(--border); color: var(--muted);
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em;
+  padding: 7px 8px; border-radius: var(--radius); cursor: pointer;
+  transition: all var(--t-fast); text-transform: uppercase;
+}
+.role-toggle:hover { color: var(--gold); border-color: var(--gold-dim); }
+.sidebar-copyright { font-size: 9px; letter-spacing: 0.18em; color: var(--dim); }
+
+/* ---------------- MAIN ---------------- */
+.app-main {
+  grid-area: main;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* keyed surface entrance — smooth, restrained page transition */
+.page-enter {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  animation: page-enter 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes page-enter {
+  0%   { opacity: 0; transform: translateY(8px); filter: blur(2px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+@media (prefers-reduced-motion: reduce) { .page-enter { animation: none; } }
+
+/* ---------------- NAV COUNTER BADGE ---------------- */
+/* Live broadcast counter on the Alerts module — increments as
+   Mission Control publishes, clears when the surface is opened. */
+.nav-badge {
+  position: relative;
+  margin-left: auto;
+  min-width: 18px; height: 18px; padding: 0 5px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 9.5px; font-weight: 700; letter-spacing: 0.06em;
+  color: #0a0004; background: var(--crimson);
+  border-radius: 9px;
+  box-shadow: 0 0 12px var(--crimson-glow);
+  animation: nav-badge-pop 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-badge::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  box-shadow: 0 0 0 0 var(--crimson-glow);
+  animation: nav-badge-ring 1.8s ease-out infinite;
+}
+@keyframes nav-badge-pop { from { transform: scale(0.2); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes nav-badge-ring { 0% { box-shadow: 0 0 0 0 var(--crimson-glow); } 70%,100% { box-shadow: 0 0 0 7px transparent; } }
+
+/* ---------------- responsive guard ---------------- */
+@media (max-width: 1360px) {
+  .sys-led-code { display: none; }
+}
+@media (max-width: 1100px) {
+  .topbar-center { display: none; }
+  .topbar-left { display: none; }
+}

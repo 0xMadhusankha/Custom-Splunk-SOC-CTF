@@ -1,0 +1,75 @@
+.intel { display: flex; flex-direction: column; height: 100%; padding: 20px 24px; gap: 18px; overflow: hidden; }
+.intel-clearance { text-align: right; }
+
+.intel-body { display: grid; grid-template-columns: 320px 1fr; gap: 18px; flex: 1; min-height: 0; }
+
+/* index */
+.intel-index { display: flex; flex-direction: column; gap: 6px; overflow-y: auto; padding-right: 4px; }
+.intel-index-cap { padding: 2px 4px 8px; font-size: 9px; }
+.intel-item {
+  text-align: left; cursor: pointer;
+  background: var(--charcoal); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 13px 14px; transition: border-color var(--t-fast), background var(--t-fast);
+}
+.intel-item:hover { border-color: var(--border-lit); background: var(--charcoal-raised); }
+.intel-item.is-active { border-color: var(--gold-dim); background: linear-gradient(to right, var(--gold-glow), transparent); }
+.intel-item-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.intel-cat { font-size: 8.5px; letter-spacing: 0.16em; color: var(--gold); border: 1px solid var(--gold-dim); padding: 2px 7px; border-radius: var(--radius); }
+.intel-item-title { color: var(--white); font-size: 12px; line-height: 1.45; letter-spacing: 0.01em; }
+.intel-item-time { margin-top: 8px; font-size: 8.5px; }
+
+/* briefing reader */
+.briefing { overflow-y: auto; padding: 0; position: relative; }
+
+/* classified reveal — the briefing decrypts into view, a crimson
+   declassification bar sweeps down once, then the content settles. */
+.briefing--reveal { animation: briefing-decrypt 460ms ease-out both; }
+@keyframes briefing-decrypt {
+  0%   { opacity: 0; filter: blur(6px); transform: translateY(6px); }
+  100% { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+.briefing-declassify {
+  position: absolute; left: 0; right: 0; top: 0; height: 2px; z-index: 6; pointer-events: none;
+  background: linear-gradient(to right, transparent, var(--crimson), transparent);
+  box-shadow: 0 0 18px var(--crimson);
+  animation: briefing-sweep 640ms cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
+}
+@keyframes briefing-sweep {
+  0%   { transform: translateY(0); opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translateY(60vh); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .briefing--reveal { animation: none; }
+  .briefing-declassify { display: none; }
+}
+.briefing-classbar {
+  display: flex; align-items: center; justify-content: space-between;
+  background: repeating-linear-gradient(45deg, var(--crimson-deep) 0 10px, transparent 10px 20px);
+  border-bottom: 1px solid var(--crimson-dim);
+  padding: 6px 16px; font-size: 8.5px; letter-spacing: 0.24em; color: var(--crimson);
+  position: sticky; top: 0; z-index: 2; background-color: var(--charcoal);
+}
+.briefing-inner { padding: 26px 34px 30px; max-width: 780px; }
+.briefing-head { display: flex; align-items: center; gap: 12px; }
+.intel-cat--lg { font-size: 10px; padding: 4px 10px; }
+.briefing-title { font-family: var(--font-display); font-weight: 600; font-size: 24px; letter-spacing: 0.02em; color: var(--white); margin: 18px 0 16px; line-height: 1.2; }
+.briefing-meta { display: flex; flex-direction: column; gap: 2px; }
+
+.briefing-divider { display: flex; align-items: center; gap: 14px; margin: 26px 0 16px; }
+.briefing-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.briefing-divider span { font-size: 9.5px; letter-spacing: 0.2em; color: var(--crimson); font-weight: 600; }
+
+.briefing-text { font-size: 13px; line-height: 1.85; color: var(--steel); letter-spacing: 0.01em; }
+
+.ioc-table { display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.ioc-row { display: grid; grid-template-columns: 96px 1fr 80px; align-items: center; gap: 12px; padding: 11px 14px; border-bottom: 1px solid var(--border-faint); }
+.ioc-row:last-child { border-bottom: 0; }
+.ioc-row:nth-child(odd) { background: var(--charcoal-raised); }
+.ioc-type { font-size: 9px; letter-spacing: 0.14em; color: var(--muted); text-transform: uppercase; }
+.ioc-value { font-size: 12px; color: var(--crimson); word-break: break-all; }
+.ioc-flag { font-size: 8.5px; letter-spacing: 0.14em; color: var(--crimson); text-align: right; border: 1px solid var(--crimson-line); padding: 2px 6px; border-radius: var(--radius); }
+
+.briefing-foot { margin-top: 30px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 8.5px; text-align: center; }
+
+@media (max-width: 1200px) { .intel-body { grid-template-columns: 280px 1fr; } }
